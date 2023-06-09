@@ -31,7 +31,17 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                Selamat datang di halaman Manajemen Inventaris!
+
+                                Pahami dan kelola inventaris perusahaan Anda dengan lebih efisien menggunakan fitur-fitur kami yang inovatif. Dengan sistem Manajemen Inventaris kami, Anda dapat melacak, mengelola, dan memantau semua aset dan barang yang ada di kantor Anda.
+
+                                Tentukan informasi detail seperti deskripsi barang, jumlah, lokasi, kondisi, nilai, dan informasi relevan lainnya dalam satu tempat yang terorganisir. Pergunakan fitur kami untuk mengelola perubahan status barang, pemindahan, dan penghapusan barang dari inventaris dengan mudah dan cepat.
+
+                                Dapatkan laporan terkini yang memberikan gambaran yang detail tentang stok barang, penggunaan barang, perubahan status barang, dan informasi lain yang dibutuhkan oleh manajemen untuk pengambilan keputusan yang tepat. Analisis data inventaris kami membantu Anda memahami tren, mengoptimalkan penggunaan aset, dan menghindari kerugian atau kekurangan barang.
+
+                                Fasilitasi proses pengadaan barang baru dengan manajemen daftar pemasok dan pembuatan pesanan pembelian yang efisien. Sistem kami juga mendukung proses penerimaan barang dengan mencatat informasi yang relevan untuk memastikan kelancaran dan keakuratan penerimaan barang.
+
+                                Keamanan data inventaris perkantoran adalah prioritas utama kami. Dengan mekanisme keamanan yang terintegrasi, seperti autentikasi pengguna, enkripsi data, dan kontrol akses berdasarkan peran dan tanggung jawab, kami menjaga keamanan dan kerahasiaan informasi Anda.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
