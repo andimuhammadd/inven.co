@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DatauserController;
+use App\Http\Controllers\DatabarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +21,9 @@ Route::get('/', function () {
 });
 
 Route::get('/app', function () {
-    return view('layouts.app');
+    return view('index');
 });
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/datauser', [DatauserController::class, 'index'])->name('datauser');
+Route::get('/databarang', [DatabarangController::class, 'index'])->name('databarang');
