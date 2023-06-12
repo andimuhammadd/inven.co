@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\CreateUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\DatauserController;
-use App\Http\Controllers\DatabarangController;
+use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\SignupController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +26,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/app', function () {
-    return view('index');
-});
+Route::get('/signup', [SignupController::class, 'index'])->name('signup');
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::get('/datauser', [DatauserController::class, 'index'])->name('datauser');
-Route::get('/databarang', [DatabarangController::class, 'index'])->name('databarang');
+
+Route::post('/perusahaan', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+
+Route::post('/createuser', [CreateUserController::class, 'create'])->name('createuser');
+
+Route::get('/databarang', [InventarisController::class, 'pagedatabarang'])->name('databarang');
+
+Route::get('/jenisbarang', [InventarisController::class, 'pagejenisbarang'])->name('jenisbarang');
+
+Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->name('satuanbarang');
+
+Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->name('satuanbarang');
+
+Route::get('/datasupplier', [InventarisController::class, 'pagedatasupplier'])->name('datasupplier');

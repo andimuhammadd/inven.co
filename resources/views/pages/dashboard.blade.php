@@ -1,7 +1,7 @@
 <div class="col">
     <div class="row mt-5">
         <div class="col-4">
-            <a href="#" class="btn btn-success h-100 w-100 d-flex justify-content-center align-items-center"> DATA <br>USER</a>
+            <a href="datauser" class="btn btn-success h-100 w-100 d-flex justify-content-center align-items-center"> DATA <br>USER</a>
         </div>
         <div class="col-4">
             <a href="#" class="btn btn-success h-100 w-100 d-flex justify-content-center align-items-center py-4">DATA <br>BARANG</a>

@@ -2,9 +2,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Kode Barang</th>
-                <th scope="col">Nama Barang</th>
-                <th scope="col">Jenis Barang</th>
+                <th scope="col">Satuan Barang</th>
                 <th scope="col">Jumlah</th>
                 <th scope="col">Satuan</th>
             </tr>

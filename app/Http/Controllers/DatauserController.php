@@ -10,7 +10,7 @@ class DatauserController extends Controller
     {
         $pageTitle = 'Data User';
         $cardHeader = 'Data User';
-        $cardTitle = 'Detail data user';
+        $cardTitle = 'Detail Data User';
         $content = view('pages.datauser');
 
         return view('main', compact('pageTitle', 'cardHeader', 'cardTitle', 'content'));

@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <!-- Header -->
-    @include('partials.header')
-
+    <nav class="navbar sticky-top bg-success" data-bs-theme="dark" navbar-expand-lg bg-body-tertiary>
+        @include('partials.header')
+    </nav>
     <div class="container-fluid" style="background-image: url('https://images.pexels.com/photos/7135016/pexels-photo-7135016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); background-size: cover; background-position: center; height: 100vh;">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="col text-center text-dark">

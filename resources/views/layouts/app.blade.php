@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!-- Memuat stylesheet Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
 
 
     <style>
@@ -48,7 +51,7 @@
                             <h5> @yield('cardHeader') </h5>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">@yield('cardTitle')</h5>
+                            <p class="card-title">@yield('cardTitle')</p>
                             @yield('content')
                         </div>
                     </div>

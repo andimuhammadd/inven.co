@@ -2,11 +2,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Kode Barang</th>
-                <th scope="col">Nama Barang</th>
-                <th scope="col">Jenis Barang</th>
-                <th scope="col">Jumlah</th>
-                <th scope="col">Satuan</th>
+                <th scope="col">Nama Supplier</th>
+                <th scope="col">Alamat</th>
+                <th scope="col">Telpon</th>
             </tr>
         </thead>
         <tbody>
