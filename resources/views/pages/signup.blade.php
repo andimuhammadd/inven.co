@@ -20,32 +20,23 @@
                         <form action="{{ route('createuser') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="company" class="form-label">Nama Pengguna</label>
-                                <input type="text" class="form-control" id="company" name="nama_pengguna" required>
+                                <label for="nama" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
                             </div>
                             <div class="mb-3">
-                                <label for="company" class="form-label">Nama Instansi/Perusahaan</label>
-                                <input type="text" class="form-control" id="company" name="nama_perusahaan" required>
+                                <label for="namaPerusahaan" class="form-label">Nama Perusahaan</label>
+                                <input type="text" class="form-control" id="namaPerusahaan" name="namaPerusahaan" required>
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email Pengguna</label>
-                                <input type="email" class="form-control" id="email" name="email_pengguna" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="Alamat" class="form-label">Alamat Perusahaan</label>
-                                <input type="text" class="form-control" id="company" name="alamat_perusahaan" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="Alamat" class="form-label">Nomor Telepon perusahaan</label>
-                                <input type="text" class="form-control" id="company" name="telepon_perusahaan" required>
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password_pengguna" required>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            <div class="mb-3">
-                                <input type="hidden" name="role_pengguna" value="admin">
-                            </div>
+                            <input type="hidden" name="perusahaan_id" value="{{ mt_rand(1000, 9999) }}">
+                            <input type="hidden" name="role" value="admin">
                             <button type="submit" class="btn btn-primary">Sign Up</button>
                         </form>
                         <div class="text-center mt-3">
@@ -56,6 +47,33 @@
             </div>
         </div>
     </div>
+
+    @if(isset($message))
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Email Sudah Digunakan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ $message }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#myModal').modal('show');
+        });
+    </script>
+    @endif
 </body>
 
 </html>

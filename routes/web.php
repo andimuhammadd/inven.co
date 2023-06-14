@@ -25,9 +25,9 @@ use App\Http\Controllers\LoginController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('/');
 
-Route::get('/signup', [SignupController::class, 'index'])->name('signup');
+Route::get('/signup', [UserController::class, 'signuppage'])->name('signup');
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/login', [UserController::class, 'loginpage'])->name('login');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -46,3 +46,5 @@ Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->
 Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->name('satuanbarang');
 
 Route::get('/datasupplier', [InventarisController::class, 'pagedatasupplier'])->name('datasupplier');
+
+Route::post('/createuser', [UserController::class, 'createUser'])->name('createuser');

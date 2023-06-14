@@ -2,52 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\perusahaan;
+use App\Models\Perusahaan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function index()
+    public function createUser(Request $request)
     {
-        $users = User::all(); // Mengambil semua data user dari tabel "users"
-        $pageTitle = 'Data User';
-        $cardHeader = 'Data User';
-        $cardTitle = 'Detail data user';
-        $content = view('pages.datauser', compact('users'));
+        try {
+            // Mulai transaksi
+            DB::beginTransaction();
 
-        return view('main', compact('pageTitle', 'cardHeader', 'cardTitle', 'content'));
+            // Validasi data form jika diperlukan
+            $validatedData = $request->validate([
+                'nama' => 'required',
+                'namaPerusahaan' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
+                'perusahaan_id' => 'required|integer',
+                'role' => 'required'
+            ]);
+
+            // Simpan data ke tabel Perusahaan
+            $perusahaan = new Perusahaan;
+            $perusahaan->id = $validatedData['perusahaan_id'];
+            $perusahaan->nama_perusahaan = $validatedData['namaPerusahaan'];
+            $perusahaan->save();
+
+            // Simpan data ke tabel User
+            $user = new User;
+            $user->nama = $validatedData['nama'];
+            $user->email = $validatedData['email'];
+            $user->password = bcrypt($validatedData['password']);
+            $user->role = $validatedData['role'];
+            $user->perusahaan_id =  $validatedData['perusahaan_id']; // Menggunakan id perusahaan baru yang didapatkan
+            $user->save();
+
+            // Commit transaksi jika semua operasi berhasil
+            DB::commit();
+
+            // Set session 'success' dengan pesan yang diinginkan
+            Session::flash('success', 'User berhasil dibuat, Silahkan Login');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::rollback();
+
+            // Set session 'error' dengan pesan yang diinginkan
+            Session::flash('error', 'Gagal membuat user, coba lagi nanti');
+        }
+
+        // Redirect ke halaman signup
+        return redirect()->route('signup');
     }
 
-    public function store(CreateUserRequest $request)
+    public function loginpage()
     {
-        // Validasi form telah dilakukan oleh CreateUserRequest
+        return view('pages.login');
+    }
 
-        // Buat instance model User
-        $user = new User();
-        $user->nama = $request->input('nama');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->role = $request->input('role');
-
-        // Simpan user ke database
-        $user->save();
-
-        // Buat instance model Perusahaan
-        $perusahaan = new perusahaan();
-        $perusahaan->nama = $request->input('perusahaan');
-        $perusahaan->alamat = $request->input('alamat');
-        $perusahaan->telepon = $request->input('telepon');
-
-        // Simpan perusahaan ke database
-        $perusahaan->save();
-
-        // Hubungkan user dengan perusahaan
-        $user->perusahaan()->associate($perusahaan);
-        $user->save();
-
-        // Redirect ke halaman login atau halaman lain yang diinginkan
-        return redirect()->route('login')->with('success', 'Akun berhasil dibuat. Silakan login.');
+    public function signuppage()
+    {
+        return view('pages.signup');
     }
 }
