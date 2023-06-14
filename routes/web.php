@@ -22,9 +22,7 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('/');
 
 Route::get('/signup', [SignupController::class, 'index'])->name('signup');
 

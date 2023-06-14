@@ -30,6 +30,9 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </form>
+                            <div class="text-center mt-3">
+                                <p>Belum punya akun? <a href="{{ route('signup') }}">Daftar disini</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
