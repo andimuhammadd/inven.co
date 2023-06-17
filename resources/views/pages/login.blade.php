@@ -31,6 +31,7 @@
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </form>
                             <div class="text-center mt-3">
+                                <p>Lupa password? <a href="{{ route('resetpassword') }}">Reset</a></p>
                                 <p>Belum punya akun? <a href="{{ route('signup') }}">Daftar disini</a></p>
                             </div>
                         </div>
@@ -39,6 +40,11 @@
             </div>
         </div>
     </div>
+    @if(session('error'))
+    <script>
+        alert("{{ session('error') }}");
+    </script>
+    @endif
 </body>
 
 </html>

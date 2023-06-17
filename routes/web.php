@@ -11,6 +11,7 @@ use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +24,33 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', [DashboardController::class, 'index'])->name('/');
+Route::get('/', [DashboardController::class, 'index'])->name('/')
+    ->name('/')
+    ->middleware('auth')
+    ->middleware('verified');
+
+Route::get('/welcome', function () {
+    return view('pages.welcome');
+})->name('welcome');
 
 Route::get('/signup', [UserController::class, 'signuppage'])->name('signup');
 
-Route::get('/login', [UserController::class, 'loginpage'])->name('login');
+Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
+Route::put('/password/{user}', [UserController::class, 'updatePassword'])->name('updatePassword');
+
+Route::get('/resetpassword', [UserController::class, 'showResetPasswordForm'])->name('resetpassword');
+
+Route::get('/sendResetPasswordLink', [UserController::class, 'showResetPasswordForm'])->name('sendResetPasswordLink');
+
+Route::get('/loginpage', [UserController::class, 'loginpage'])->name('loginpage');
+
+Route::post('/login', [UserController::class, 'login'])->name('login');
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/loginpage'); // Ganti dengan rute yang sesuai setelah logout
+})->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

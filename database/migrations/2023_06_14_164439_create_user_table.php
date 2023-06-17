@@ -21,6 +21,7 @@ class CreateUserTable extends Migration
             $table->string('role');
             $table->integer('perusahaan_id');
             $table->foreign('perusahaan_id')->references('id')->on('perusahaan');
+            $table->string('foto_profile');
             $table->timestamps();
         });
     }

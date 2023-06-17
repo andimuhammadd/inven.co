@@ -1,3 +1,13 @@
+@php
+use App\Models\User;
+
+$users = User::all();
+@endphp
+
+@foreach($users as $user)
+<p>{{ $user->name }}</p>
+@endforeach
+
 <nav class="navbar navbar-expand-lg bg-light rounded mt-3" id="sidebar">
     <div class="container-fluid">
         <button class="navbar-toggler navbar-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -11,11 +21,18 @@
             <div class="offcanvas-body py-3">
                 <ul class="navbar-nav nav-pills flex-column justify-content-end flex-grow-1">
                     <div class="text-center">
-                        <img src="{{ asset('images/profil.jpg') }}" alt="Profile Picture" class="rounded-circle mt-3" width="100" height="100">
+                        <img src="{{ asset('images/' . Auth::user()->foto_profile) }}" alt="Profile Picture" class="rounded-circle mt-3" width="100" height="100">
                     </div>
                     <div class="text-center">
-                        <span class="navbar-text">Nama Pengguna</span>
-                        <button type="button" class="btn btn-link position-absolute end-0"><i class="bi bi-gear-fill"></i></button>
+                        <span class="navbar-text">{{ auth()->user()->nama }}</span>
+
+                        <!-- Button to trigger the modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+
+                        @include('component.modal_edit_user')
+
                     </div>
                     <hr style="background-color: black;">
                     <li class="nav-item">
@@ -63,6 +80,10 @@
                     </li>
                 </ul>
             </div>
+            @include('component.modal_edit_password')
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editPasswordModal">
+                Change Password
+            </button>
         </div>
     </div>
 </nav>

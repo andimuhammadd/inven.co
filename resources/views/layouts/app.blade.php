@@ -23,8 +23,6 @@
         }
     </style>
 
-
-
 </head>
 
 <body>
@@ -36,6 +34,15 @@
 
     <div class="container-fluid bg-info-subtle d-inline-block" style="background-image: url('https://images.pexels.com/photos/7135016/pexels-photo-7135016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); background-size: cover; background-position: center; height: 100vh;">
         <div class="row">
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @elseif(session('error'))
+            <div class="alert alert-success">
+                {{ session('error') }}
+            </div>
+            @endif
 
             <!-- sidebar -->
             <div class="col-lg-3 col-md-12">

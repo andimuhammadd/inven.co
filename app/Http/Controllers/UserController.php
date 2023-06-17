@@ -7,6 +7,10 @@ use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,8 +27,17 @@ class UserController extends Controller
                 'email' => 'required|email',
                 'password' => 'required',
                 'perusahaan_id' => 'required|integer',
-                'role' => 'required'
+                'role' => 'required',
+                'foto_profile' => 'required'
             ]);
+
+            //cek gmail duplikat
+            $existingUser = User::where('email', $validatedData['email'])->first();
+
+            if ($existingUser) {
+                // Email sudah terdaftar
+                return redirect()->back()->with('error', 'Gmail telah terdaftar, silahkan login');
+            }
 
             // Simpan data ke tabel Perusahaan
             $perusahaan = new Perusahaan;
@@ -39,6 +52,7 @@ class UserController extends Controller
             $user->password = bcrypt($validatedData['password']);
             $user->role = $validatedData['role'];
             $user->perusahaan_id =  $validatedData['perusahaan_id']; // Menggunakan id perusahaan baru yang didapatkan
+            $user->foto_profile =  $validatedData['foto_profile'];
             $user->save();
 
             // Commit transaksi jika semua operasi berhasil
@@ -58,6 +72,85 @@ class UserController extends Controller
         return redirect()->route('signup');
     }
 
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            // Autentikasi berhasil
+            return redirect()->intended('/dashboard');
+        } else {
+            // Autentikasi gagal
+            return redirect()->back()->with('error', 'Email atau password salah'); // Menampilkan pesan error
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi data yang dikirim dari formulir
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'foto_profile' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk foto (opsional)
+        ]);
+
+        // Dapatkan pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Update field nama dan email pengguna
+        $user->nama = $validatedData['nama'];
+        $user->email = $validatedData['email'];
+
+
+        // Cek apakah ada file foto yang diunggah
+        if ($request->hasFile('foto_profile')) {
+            $foto_file = $request->file('foto_profile');
+            $foto_ekstensi = $foto_file->extension();
+            $foto_nama = date('ymdhis') . "." . $foto_ekstensi;
+            $foto_file->move(public_path('images'), $foto_nama);
+
+            //update field foto_profile
+            $data_foto = User::where('id', $id)->first();
+            File::delete(public_path('images') . '/' . $data_foto->foto_profile);
+            $user->foto_profile = $foto_nama;
+        }
+
+        // Simpan perubahan pada model pengguna
+        $user->save();
+
+        // Redirect ke halaman yang diinginkan setelah berhasil mengupdate pengguna
+        return redirect()->route('dashboard')->with('success', 'User berhasil di update');
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        // Validasi data yang dikirim dari formulir
+        $validatedData = $request->validate([
+            'password_sekarang' => 'required',
+            'password_baru' => 'required',
+        ]);
+
+        // Dapatkan pengguna berdasarkan ID
+        $user = User::find($id);
+
+        // Cek apakah pengguna ditemukan
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+
+        // Verifikasi password sekarang
+        if (!Hash::check($validatedData['password_sekarang'], $user->password)) {
+            return redirect()->back()->with('error', 'Incorrect current password');
+        }
+
+        // Update password baru
+        $user->password = bcrypt($validatedData['password_baru']);
+        $user->save();
+
+        // Redirect back to the form or any desired page
+        return redirect()->back()->with('success', 'password successfully updated');
+    }
+
     public function loginpage()
     {
         return view('pages.login');
@@ -66,5 +159,56 @@ class UserController extends Controller
     public function signuppage()
     {
         return view('pages.signup');
+    }
+
+    public function showResetPasswordForm()
+    {
+        return view('pages.reset_password');
+    }
+
+    public function sendResetPasswordLink(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $response = Password::sendResetLink($request->only('email'));
+
+        if ($response === Password::RESET_LINK_SENT) {
+            return redirect()->back()->with('success', 'Reset password link sent to your email.');
+        } else {
+            return redirect()->back()->withErrors(['email' => __($response)]);
+        }
+    }
+
+    public function showResetPasswordFormWithToken($token)
+    {
+        return view('pages.reset_password', ['token' => $token]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        $response = Password::reset($request->only(
+            'email',
+            'password',
+            'password_confirmation',
+            'token'
+        ), function ($user, $password) {
+            $user->forceFill([
+                'password' => bcrypt($password),
+            ])->save();
+        });
+
+        if ($response === Password::PASSWORD_RESET) {
+            return redirect()->route('login')->with('success', 'Password reset successful. Please login with your new password.');
+        } else {
+            return redirect()->back()->withErrors(['email' => __($response)]);
+        }
     }
 }

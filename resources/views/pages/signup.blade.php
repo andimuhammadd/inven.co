@@ -37,10 +37,11 @@
                             </div>
                             <input type="hidden" name="perusahaan_id" value="{{ mt_rand(1000, 9999) }}">
                             <input type="hidden" name="role" value="admin">
+                            <input type="hidden" name="foto_profile" value="profile_default.jpg">
                             <button type="submit" class="btn btn-primary">Sign Up</button>
                         </form>
                         <div class="text-center mt-3">
-                            <p>Sudah punya akun? <a href="{{ route('login') }}">Login</a></p>
+                            <p>Sudah punya akun? <a href="{{ route('loginpage') }}">Login</a></p>
                         </div>
                     </div>
                 </div>
@@ -48,32 +49,16 @@
         </div>
     </div>
 
-    @if(isset($message))
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Email Sudah Digunakan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {{ $message }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    @if(session('error'))
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#myModal').modal('show');
-        });
+        alert("{{ session('error') }}");
+    </script>
+    @elseif(session('success'))
+    <script>
+        alert("{{ session('success') }}");
     </script>
     @endif
+
 </body>
 
 </html>
