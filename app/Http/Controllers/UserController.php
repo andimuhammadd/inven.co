@@ -72,6 +72,32 @@ class UserController extends Controller
         return redirect()->route('signup');
     }
 
+    public function tambahuser(Request $request)
+    {
+        // Validasi data yang dikirim dari formulir
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'role' => 'required',
+            'perusahaan_id' => 'required',
+            'foto_profile' => 'required',
+        ]);
+
+        // Buat instance user baru
+        $user = new User;
+        $user->nama = $validatedData['nama'];
+        $user->email = $validatedData['email'];
+        $user->password = bcrypt('admin123'); // Default password admin123
+        $user->role = $validatedData['role'];
+        $user->perusahaan_id = $validatedData['perusahaan_id'];
+        $user->foto_profile = $validatedData['foto_profile'];
+
+        // Simpan user ke dalam database
+        $user->save();
+
+        return redirect()->back()->with('success', 'User added successfully');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -151,6 +177,21 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'password successfully updated');
     }
 
+    public function destroy($id)
+    {
+        // Cari user berdasarkan ID
+        $user = User::find($id);
+
+        if ($user) {
+            // Hapus user
+            $user->delete();
+
+            return redirect()->back()->with('success', 'User berhasil dihapus');
+        } else {
+            return redirect()->back()->with('error', 'User tidak ditemukan');
+        }
+    }
+
     public function loginpage()
     {
         return view('pages.login');
@@ -159,56 +200,5 @@ class UserController extends Controller
     public function signuppage()
     {
         return view('pages.signup');
-    }
-
-    public function showResetPasswordForm()
-    {
-        return view('pages.reset_password');
-    }
-
-    public function sendResetPasswordLink(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-        ]);
-
-        $response = Password::sendResetLink($request->only('email'));
-
-        if ($response === Password::RESET_LINK_SENT) {
-            return redirect()->back()->with('success', 'Reset password link sent to your email.');
-        } else {
-            return redirect()->back()->withErrors(['email' => __($response)]);
-        }
-    }
-
-    public function showResetPasswordFormWithToken($token)
-    {
-        return view('pages.reset_password', ['token' => $token]);
-    }
-
-    public function resetPassword(Request $request)
-    {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed|min:8',
-        ]);
-
-        $response = Password::reset($request->only(
-            'email',
-            'password',
-            'password_confirmation',
-            'token'
-        ), function ($user, $password) {
-            $user->forceFill([
-                'password' => bcrypt($password),
-            ])->save();
-        });
-
-        if ($response === Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('success', 'Password reset successful. Please login with your new password.');
-        } else {
-            return redirect()->back()->withErrors(['email' => __($response)]);
-        }
     }
 }
