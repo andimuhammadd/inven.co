@@ -1,64 +1,49 @@
-@php
-use App\Models\User;
-
-$perusahaan_id = Auth::user()->perusahaan_id;
-
-$users = User::where('perusahaan_id', $perusahaan_id)->get();
-@endphp
 <div class="col">
     <div class="table-responsive">
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                     <th>Nomor</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Profile</th>
+                    <th>Nama Supplier</th>
+                    <th>Alamat</th>
+                    <th>Telepon</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @php
-                $number = 1; // Inisialisasi nomor awal
+                $number = 1;
                 @endphp
-                @foreach ($users as $user)
-                @if ($user->id !== Auth::id())
+                @foreach ($suppliers as $supplier)
                 <tr>
                     <td>{{ $number }}</td>
-                    <td>{{ $user->nama }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->role }}</td>
+                    <td>{{ $supplier->nama }}</td>
+                    <td>{{ $supplier->alamat }}</td>
+                    <td>{{ $supplier->telepon }}</td>
                     <td>
-                        <img src="{{ asset('images/' . $user->foto_profile) }}" alt="Foto Profil" width="50" height="50">
-                    </td>
-                    <td>
-                        @include('component.modal_edit_user')
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal{{ $user->id }}">Edit</a>
-                        @include('component.modal_hapus_user')
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalHapusUser{{ $user->id }}">Hapus</a>
 
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal{{ $supplier->id }}">Edit</a>
+
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalHapusUser{{ $supplier->id }}">Hapus</a>
                     </td>
                 </tr>
                 @php
                 $number++;
                 @endphp
-                @endif
                 @endforeach
 
-                @if (count($users) === 1)
+                @if (count($suppliers) === 0)
                 <tr>
-                    <td colspan="5">Data user kosong</td>
+                    <td colspan="5">Data Supplier kosong</td>
                 </tr>
                 @endif
             </tbody>
         </table>
     </div>
 
-    @include('component.modal_tambah_user')
+    @include('component.modal_tambah_supplier')
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Tambah User
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddSupplier">
+        Tambah Supplier
     </button>
-
 </div>

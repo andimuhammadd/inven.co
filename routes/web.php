@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DatauserController;
 use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\DataSupplierController;
 use App\Http\Controllers\PerusahaanController;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,3 +73,6 @@ Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->
 Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->name('satuanbarang');
 
 Route::get('/datasupplier', [InventarisController::class, 'pagedatasupplier'])->name('datasupplier');
+
+//data supplier controller
+Route::post('/tambahsupplier', [DataSupplierController::class, 'store'])->name('tambah.supplier');

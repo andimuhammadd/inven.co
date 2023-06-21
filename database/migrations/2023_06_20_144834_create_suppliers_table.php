@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_perusahaan');
             $table->string('nama');
             $table->string('alamat');
+            $table->string('telepon');
             $table->timestamps();
+
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaan')->onDelete('cascade');
         });
     }
 

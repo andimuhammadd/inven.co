@@ -21,17 +21,26 @@ $user = auth()->user();
                     <div class="text-center">
                         <div class="col">
                             <div class="row">
-                                @include('component.modal_edit_user')
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal{{ $user->id }}">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
+                                <div class="col">
+                                    <span class="navbar-text">{{ auth()->user()->role }}</span>
+                                </div>
                             </div>
                             <div class="row">
-                                <span class="navbar-text">{{ auth()->user()->role }}</span>
-                                <span class="navbar-text">{{ auth()->user()->nama }}</span>
+                                <div class="col">
+                                    <span class="navbar-text">{{ auth()->user()->nama }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    @include('component.modal_edit_user')
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal{{ $user->id }}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <hr style="background-color: black;">
                     <li class="nav-item">
                         <a class="nav-link ps-2 {{ $pageTitle == 'Dashboard' ? 'active link-light' : 'link-dark' }}" aria-current="page" href="dashboard"><i class="bi bi-house-door-fill"></i> Dashboard</a>

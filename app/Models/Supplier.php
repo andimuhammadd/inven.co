@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supplier extends Model
 {
-    use HasFactory;
+    protected $table = 'suppliers';
+    protected $fillable = ['id_perusahaan', 'nama', 'alamat', 'telepon'];
 
-    protected $fillable = ['nama', 'alamat'];
+    public function perusahaan()
+    {
+        return $this->belongsTo(Perusahaan::class, 'id_perusahaan');
+    }
 }
