@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DatauserController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\DataSupplierController;
+use App\Http\Controllers\SatuanBarangController;
+use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\PerusahaanController;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,3 +78,15 @@ Route::get('/datasupplier', [InventarisController::class, 'pagedatasupplier'])->
 
 //data supplier controller
 Route::post('/tambahsupplier', [DataSupplierController::class, 'store'])->name('tambah.supplier');
+Route::delete('/supplier/{id}', [DataSupplierController::class, 'destroy'])->name('supplier.destroy');
+Route::put('/supplier/{id}', [DataSupplierController::class, 'update'])->name('supplier.update');
+
+//satuan barang controller
+Route::post('/tambahsatuan', [SatuanBarangController::class, 'store'])->name('satuanbarang.store');
+Route::put('/satuanbarang/{id}', [SatuanBarangController::class, 'update'])->name('satuanbarang.update');
+Route::delete('/satuanbarang/{id}', [SatuanBarangController::class, 'destroy'])->name('satuanbarang.destroy');
+
+//Jenis barang controller
+Route::post('/tambahjenisbarang', [JenisBarangController::class, 'store'])->name('jenisbarang.store');
+Route::put('/jenisnbarang/{id}', [JenisBarangController::class, 'update'])->name('jenisbarang.update');
+Route::delete('/jenisbarang/{id}', [JenisBarangController::class, 'destroy'])->name('jenisbarang.destroy');

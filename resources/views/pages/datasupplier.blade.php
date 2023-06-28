@@ -21,10 +21,10 @@
                     <td>{{ $supplier->alamat }}</td>
                     <td>{{ $supplier->telepon }}</td>
                     <td>
-
-                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal{{ $supplier->id }}">Edit</a>
-
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalHapusUser{{ $supplier->id }}">Hapus</a>
+                        @include('component.supplier.modal_edit_supplier')
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modaledit{{ $supplier->id }}">Edit</a>
+                        @include('component.supplier.modal_hapus_supplier')
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus{{ $supplier->id }}">Hapus</a>
                     </td>
                 </tr>
                 @php
@@ -41,7 +41,8 @@
         </table>
     </div>
 
-    @include('component.modal_tambah_supplier')
+
+    @include('component.supplier.modal_tambah_supplier')
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddSupplier">
         Tambah Supplier

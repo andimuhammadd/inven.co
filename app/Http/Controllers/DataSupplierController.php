@@ -23,4 +23,29 @@ class DataSupplierController extends Controller
         // Redirect atau tampilkan pesan sukses
         return redirect()->route('datasupplier')->with('success', 'Supplier berhasil ditambahkan.');
     }
+
+    public function destroy($id)
+    {
+        $supplier = Supplier::findOrFail($id);
+
+        $supplier->delete();
+
+        return redirect()->back()->with('success', 'Supplier berhasil dihapus');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required'
+        ]);
+
+        $supplier = Supplier::findOrFail($id);
+
+        // Update data satuan barang
+        $supplier->update($data);
+
+        return redirect()->back()->with('success', 'Data Supplier berhasil diperbarui');
+    }
 }

@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Perusahaan;
 
-
-class Supplier extends Model
+class JenisBarang extends Model
 {
-    protected $table = 'suppliers';
-    protected $fillable = ['id_perusahaan', 'nama', 'alamat', 'telepon'];
+    protected $table = 'jenis_barang';
+    protected $fillable = [
+        'nama',
+        'id_perusahaan',
+    ];
 
     public function perusahaan()
     {

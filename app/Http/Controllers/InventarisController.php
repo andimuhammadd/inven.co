@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Satuanbarang;
 use App\Models\User;
+use App\Models\Perusahaan;
 
 class InventarisController extends Controller
 {
@@ -21,20 +23,28 @@ class InventarisController extends Controller
 
     public function pagejenisbarang()
     {
+        $user = Auth::user();
+        $id_perusahaan = $user->perusahaan_id;
+        $perusahaan = Perusahaan::find($id_perusahaan);
+        $jenisbarang = $perusahaan->jenisbarang()->get();
         $pageTitle = 'Jenis Barang';
         $cardHeader = 'Inventaris';
         $cardTitle = 'Jenis Barang';
-        $content = view('pages.databarang');
+        $content = view('pages.jenisbarang', compact('jenisbarang'));
 
         return view('main', compact('pageTitle', 'cardHeader', 'cardTitle', 'content'));
     }
 
     public function pagesatuanbarang()
     {
+        $user = Auth::user();
+        $id_perusahaan = $user->perusahaan_id;
+        $perusahaan = Perusahaan::find($id_perusahaan);
+        $satuanbarang = $perusahaan->satuanbarang()->get();
         $pageTitle = 'Satuan Barang';
         $cardHeader = 'Inventaris';
         $cardTitle = 'Satuan Barang';
-        $content = view('pages.satuanbarang');
+        $content = view('pages.satuanbarang', compact('satuanbarang'));
 
         return view('main', compact('pageTitle', 'cardHeader', 'cardTitle', 'content'));
     }

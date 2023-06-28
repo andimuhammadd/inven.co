@@ -12,17 +12,23 @@ $user = auth()->user();
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+            <div class="col">
+                <h5 class="navbar-text">{{ auth()->user()->perusahaan->nama_perusahaan }}</h5>
+            </div>
             <div class="offcanvas-body py-3">
                 <ul class="navbar-nav nav-pills flex-column justify-content-end flex-grow-1">
                     <div class="text-center">
                         <img src="{{ asset('images/' . Auth::user()->foto_profile) }}" alt="Profile Picture" class="rounded-circle mt-3" width="100" height="100">
-                        <!-- Button to trigger the modal -->
                     </div>
                     <div class="text-center">
                         <div class="col">
                             <div class="row">
                                 <div class="col">
                                     <span class="navbar-text">{{ auth()->user()->role }}</span>
+                                    @include('component.modal_edit_user')
+                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editUserModal{{ $user->id }}">
+                                        <i class="bi bi-sm bi-pencil-square"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
@@ -32,10 +38,7 @@ $user = auth()->user();
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    @include('component.modal_edit_user')
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal{{ $user->id }}">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
+
                                 </div>
                             </div>
                         </div>

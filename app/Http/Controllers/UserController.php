@@ -135,10 +135,17 @@ class UserController extends Controller
             $foto_nama = date('ymdhis') . "." . $foto_ekstensi;
             $foto_file->move(public_path('images'), $foto_nama);
 
-            //update field foto_profile
+            // Mengambil data user berdasarkan ID
             $data_foto = User::where('id', $id)->first();
-            File::delete(public_path('images') . '/' . $data_foto->foto_profile);
+
+            // Menghapus foto profil lama kecuali foto default
+            if ($data_foto->foto_profile !== 'profile_default.jpg') {
+                File::delete(public_path('images') . '/' . $data_foto->foto_profile);
+            }
+
+            // Mengupdate field foto_profile dengan foto baru
             $user->foto_profile = $foto_nama;
+            $user->save();
         }
 
         // Simpan perubahan pada model pengguna

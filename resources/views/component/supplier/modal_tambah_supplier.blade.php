@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Form Tambah User</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Form Tambah suppliers</h1>
             </div>
             <div class="modal-body">
                 <form action="tambahsupplier" method="POST">
