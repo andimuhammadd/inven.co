@@ -13,10 +13,14 @@ class InventarisController extends Controller
 {
     public function pagedatabarang()
     {
+        $user = Auth::user();
+        $id_perusahaan = $user->perusahaan_id;
+        $perusahaan = Perusahaan::find($id_perusahaan);
+        $databarangs = $perusahaan->databarangs()->get();
         $pageTitle = 'Data Barang';
         $cardHeader = 'Inventaris';
         $cardTitle = 'Data Barang';
-        $content = view('pages.databarang');
+        $content = view('pages.databarang', compact('databarangs'));
 
         return view('main', compact('pageTitle', 'cardHeader', 'cardTitle', 'content'));
     }
@@ -26,7 +30,7 @@ class InventarisController extends Controller
         $user = Auth::user();
         $id_perusahaan = $user->perusahaan_id;
         $perusahaan = Perusahaan::find($id_perusahaan);
-        $jenisbarang = $perusahaan->jenisbarang()->get();
+        $jenisbarang = $perusahaan->jenisbarangs()->get();
         $pageTitle = 'Jenis Barang';
         $cardHeader = 'Inventaris';
         $cardTitle = 'Jenis Barang';
@@ -40,7 +44,7 @@ class InventarisController extends Controller
         $user = Auth::user();
         $id_perusahaan = $user->perusahaan_id;
         $perusahaan = Perusahaan::find($id_perusahaan);
-        $satuanbarang = $perusahaan->satuanbarang()->get();
+        $satuanbarang = $perusahaan->satuanbarangs()->get();
         $pageTitle = 'Satuan Barang';
         $cardHeader = 'Inventaris';
         $cardTitle = 'Satuan Barang';

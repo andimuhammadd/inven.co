@@ -7,7 +7,7 @@ use App\Models\Perusahaan;
 
 class SatuanBarang extends Model
 {
-    protected $table = 'satuan_barang'; // Nama tabel yang sesuai
+    protected $table = 'satuan_barang';
 
     protected $fillable = [
         'nama_satuan',
@@ -18,5 +18,10 @@ class SatuanBarang extends Model
     public function perusahaan()
     {
         return $this->belongsTo(Perusahaan::class, 'id_perusahaan');
+    }
+
+    public function dataBarangs()
+    {
+        return $this->hasMany(DataBarang::class, 'id_satuan');
     }
 }

@@ -19,13 +19,23 @@ class Perusahaan extends Model
         return $this->hasMany(User::class, 'perusahaan_id');
     }
 
-    public function satuanbarang()
+    public function satuanbarangs()
     {
         return $this->hasMany(Satuanbarang::class, 'id_perusahaan');
     }
 
-    public function jenisbarang()
+    public function jenisbarangs()
     {
         return $this->hasMany(JenisBarang::class, 'id_perusahaan');
+    }
+
+    public function suppliers()
+    {
+        return $this->hasMany(Supplier::class, 'id_perusahaan');
+    }
+
+    public function dataBarangs()
+    {
+        return $this->hasMany(DataBarang::class, 'id_perusahaan');
     }
 }
