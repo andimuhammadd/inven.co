@@ -11,6 +11,7 @@ use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\DataBarangController;
 use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -67,12 +68,22 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/datauser', [DatauserController::class, 'index'])->name('datauser');
 
 //inventaris page
-Route::get('/databarang', [InventarisController::class, 'pagedatabarang'])->name('databarang');
+Route::get('/databarang', [InventarisController::class, 'pagedatabarang'])->name('databarang.index');
 Route::get('/jenisbarang', [InventarisController::class, 'pagejenisbarang'])->name('jenisbarang');
 Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->name('satuanbarang');
 Route::get('/satuanbarang', [InventarisController::class, 'pagesatuanbarang'])->name('satuanbarang');
 Route::get('/datasupplier', [InventarisController::class, 'pagedatasupplier'])->name('datasupplier');
 
+//Transaksi page
+Route::get('/barangmasuk', [TransaksiController::class, 'pagebarangmasuk'])->name('barangmasuk.index');
+Route::get('/barangmasuk/create', [TransaksiController::class, 'create'])->name('barangmasuk.create');
+Route::get('/barangkeluar/create', [TransaksiController::class, 'keluarcreate'])->name('barangkeluar.create');
+Route::post('/transaksibarangmasuk', [TransaksiController::class, 'store'])->name('barangmasuk.store');
+Route::post('/barangkeluarstore', [TransaksiController::class, 'barangkeluarstore'])->name('barangkeluar.store');
+Route::delete('/barangkeluar/{id}', [TransaksiController::class, 'barangkeluardestroy'])->name('barangkeluar.destroy');
+Route::delete('/barangmasuk/{id}', [TransaksiController::class, 'barangmasukdestroy'])->name('barangmasuk.destroy');
+
+Route::get('/barangkeluar', [TransaksiController::class, 'pagebarangkeluar'])->name('barangkeluar.index');
 //data supplier controller
 Route::post('/tambahsupplier', [DataSupplierController::class, 'store'])->name('tambah.supplier');
 Route::delete('/supplier/{id}', [DataSupplierController::class, 'destroy'])->name('supplier.destroy');
@@ -91,5 +102,5 @@ Route::delete('/jenisbarang/{id}', [JenisBarangController::class, 'destroy'])->n
 //Data barang controller
 Route::get('/databarang/create', [DataBarangController::class, 'create'])->name('databarang.create');
 Route::post('/tambahbarang', [DataBarangController::class, 'store'])->name('databarang.store');
-Route::put('/databarang/{id}', [DataBarangController::class, 'update'])->name('databarang.update');
 Route::delete('/databarang/{id}', [DataBarangController::class, 'destroy'])->name('databarang.destroy');
+Route::put('/databarang/{id}', [DataBarangController::class, 'update'])->name('databarang.update');

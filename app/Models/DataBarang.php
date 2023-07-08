@@ -40,12 +40,12 @@ class DataBarang extends Model
         return $this->belongsTo(Perusahaan::class, 'id_perusahaan');
     }
 
-    public function barangMasuk()
+    public function barangMasuks()
     {
         return $this->hasMany(BarangMasuk::class, 'id_data_barang');
     }
 
-    public function barangKeluar()
+    public function barangKeluars()
     {
         return $this->hasMany(BarangKeluar::class, 'id_data_barang');
     }

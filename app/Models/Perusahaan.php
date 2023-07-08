@@ -38,4 +38,14 @@ class Perusahaan extends Model
     {
         return $this->hasMany(DataBarang::class, 'id_perusahaan');
     }
+
+    public function barangmasuks()
+    {
+        return $this->hasMany(BarangMasuk::class, 'id_perusahaan');
+    }
+
+    public function barangkeluars()
+    {
+        return $this->hasMany(BarangKeluar::class, 'id_perusahaan');
+    }
 }

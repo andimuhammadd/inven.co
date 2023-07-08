@@ -11,9 +11,12 @@ class CreateBarangKeluarTable extends Migration
         Schema::create('barang_keluar', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_data_barang');
+            $table->Integer('id_perusahaan');
+            $table->string('keterangan');
             $table->integer('jumlah');
             $table->timestamps();
 
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaan')->onDelete('cascade');
             $table->foreign('id_data_barang')->references('id')->on('data_barang')->onDelete('cascade');
         });
     }

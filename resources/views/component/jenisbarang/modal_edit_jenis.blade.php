@@ -12,7 +12,7 @@
                     @method('PUT')
                     <!-- User fields to be edited -->
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nama Satuan</label>
+                        <label for="name" class="form-label">Nama Jenis Barang</label>
                         <input type="text" class="form-control" id="name" name="nama" value="{{ $jenis->nama }}" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>

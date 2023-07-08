@@ -19,13 +19,15 @@ class CreateDataBarangTable extends Migration
             $table->string('nama_barang');
             $table->unsignedBigInteger('id_supplier');
             $table->unsignedBigInteger('id_jenis');
+            $table->Integer('jumlah')->nullable();
             $table->unsignedBigInteger('id_satuan');
-            $table->integer('id_perusahaan');
+            $table->Integer('id_perusahaan');
             $table->timestamps();
 
             $table->foreign('id_supplier')->references('id')->on('suppliers')->onDelete('cascade');
             $table->foreign('id_jenis')->references('id')->on('jenis_barang')->onDelete('cascade');
             $table->foreign('id_satuan')->references('id')->on('satuan_barang')->onDelete('cascade');
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaan')->onDelete('cascade');
         });
     }
 

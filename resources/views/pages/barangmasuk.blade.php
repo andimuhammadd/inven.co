@@ -3,33 +3,31 @@
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Nomor</th>
-                    <th scope="col">Kode Barang</th>
-                    <th scope="col">Nama Barang</th>
-                    <th scope="col">Jenis Barang</th>
-                    <th scope="col">Jumlah</th>
-                    <th scope="col">Satuan</th>
-                    <th scope="col">Supplier</th>
-                    <th scope="col">Aksi</th>
+                    <th>Nomor</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Jumlah</th>
+                    <th>Tanggal Masuk</th>
+                    <th>Hapus</th>
                 </tr>
             </thead>
             <tbody>
                 @php
                 $number = 1;
                 @endphp
-                @foreach ($databarangs as $databarang)
+                @foreach ($barangMasuks as $barangMasuk)
                 <tr>
                     <td>{{ $number }}</td>
-                    <td>{{ $databarang->kode_barang }}</td>
-                    <td>{{ $databarang->nama_barang }}</td>
-                    <td>{{ $databarang->jenis->nama }}</td>
-                    <td>{{ $databarang->jumlah ?? 0 }}</td>
-                    <td>{{ $databarang->satuan->nama_satuan }}</td>
-                    <td>{{ $databarang->supplier->nama }}</td>
+                    <td>{{ $barangMasuk->databarang->kode_barang }}</td>
+                    <td>{{ $barangMasuk->databarang->nama_barang }}</td>
+                    <td>{{ $barangMasuk->jumlah }}</td>
+                    <td>{{ $barangMasuk->created_at }}</td>
                     <td>
-
-                        @include('component.databarang.modalhapus')
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus{{ $databarang->id }}">Hapus</a>
+                        @include('component.barangmasuk.modalhapus')
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalHapus{{ $barangMasuk->id }}">
+                            Hapus
+                        </button>
                     </td>
                 </tr>
                 @php
@@ -37,9 +35,9 @@
                 @endphp
                 @endforeach
 
-                @if (count($databarangs) === 0)
+                @if (count($barangMasuks) === 0)
                 <tr>
-                    <td colspan="5">Data Barang kosong</td>
+                    <td colspan="6">Data Transaksi Barang Masuk kosong</td>
                 </tr>
                 @endif
             </tbody>
@@ -47,10 +45,10 @@
     </div>
 
     <!-- Button trigger modal -->
-    <button id="btnModal" type="button" class="btn btn-primary">Tambah Data Barang</button>
+    <button id="btnModal" type="button" class="btn btn-primary">Tambah Transaksi</button>
 
     <!-- Modal -->
-    @include('component.databarang.templateModal')
+    @include('component.barangmasuk.templateModal')
     <!-- Modal -->
 
     <!-- Include jQuery library -->
@@ -60,14 +58,14 @@
             $('#btnModal').click(function() {
                 // Menggunakan AJAX untuk memuat konten modal
                 $.ajax({
-                    url: "{{ route('databarang.create') }}",
+                    url: "{{ route('barangmasuk.create') }}",
                     method: "GET",
                     dataType: "html",
                     success: function(response) {
                         $('#modalContent').html(response);
 
                         // Menampilkan modal setelah konten dimuat
-                        var modal = new bootstrap.Modal(document.getElementById('modalAddDataBarang'));
+                        var modal = new bootstrap.Modal(document.getElementById('modalAddBarangMasuk'));
                         modal.show();
                     },
                     error: function(xhr, status, error) {
@@ -77,5 +75,6 @@
             });
         });
     </script>
+
 
 </div>
